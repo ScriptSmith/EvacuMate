@@ -5,6 +5,19 @@ const bodyParser = require('body-parser')
 const request = require('request')
 const app = express()
 
+var NodeGeocoder = require('node-geocoder');
+
+var options = {
+  provider: 'google',
+
+  // Optional depending on the providers
+  httpAdapter: 'https', // Default
+  apiKey: 'AIzaSyC5_74zprCJ8ZZdHJrNbTcGxl6nNdNRlsA', // for Mapquest, OpenCage, Google Premier
+  formatter: null         // 'gpx', 'string', ...
+};
+
+var geocoder = NodeGeocoder(options);
+
 app.set('port', (process.env.PORT || 5000))
 
 // Process application/x-www-form-urlencoded
@@ -38,7 +51,11 @@ app.post('/webhook/', function (req, res) {
         let sender = event.sender.id
         if (event.message && event.message.text) {
             let text = event.message.text
-            sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+
+            geocoder.geocode(text, function(err, res, sender) {
+                sendTextMessage(sender, "Text received, echo: " + res[0]["country"].substring(0, 200))
+            });
+
         }
     }
     res.sendStatus(200)
