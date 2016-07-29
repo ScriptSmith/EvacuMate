@@ -52,9 +52,9 @@ app.post('/webhook/', function (req, res) {
         if (event.message && event.message.text) {
             let text = event.message.text
 
-            geocoder.geocode(text, function(err, res, sender) {
-                sendTextMessage(sender, "Text received, echo: " + res[0]["country"].substring(0, 200))
-            });
+            // geocoder.geocode(text, function(err, res, sender) {
+            //     sendTextMessage(sender, "Text received, echo: " + res[0]["country"].substring(0, 200))
+            // });
 
         }
     }
