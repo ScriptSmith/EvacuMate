@@ -147,11 +147,18 @@ function initMap() {
         }
     })
 
+    var heatMapData = [];
 
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 9,
         center: {lat: -27.4999514, lng: 153.0154763}
     });
+
+    heatmap = new google.maps.visualization.HeatmapLayer({
+        data: heatMapData,
+    });
+
+    heatmap.setMap(map);
 
     map.setOptions({styles: styles});
 
@@ -169,7 +176,10 @@ function initMap() {
             headers: {"x-iag-api-key": "iag-gov-hack-api"},
             data: '{"longitude": ' + map.getCenter().lng() + ',"latitude": ' + map.getCenter().lat() +',"max_distance": 100,"limit": 20}',
             success: function (data) {
-                console.log(JSON.stringify(data));
+                for (var i in data){
+                    var point = data[i]
+                    heatMapData.push(new google.maps.LatLng(point["latitude"],point["longitude"]))
+                }
             },
             error: function(){
                 alert("Cannot get data");
@@ -177,3 +187,5 @@ function initMap() {
         });
     }, 5000)
 }
+
+[{"gnaf_pid":"GAQLD163295784","longitude":153.00319657,"latitude":-27.49026287,"full_address":"55 HOOGLEY STREET","locality":"WEST END","postcode":"4101","state":"QLD","reliability":"2","iag_coordinate":"1","source_type":"OTHER GOVERNMENT FLOOD DATA","average_annual_damage":"H","flood_frequency":"H","distance":90.37934318887578}]
