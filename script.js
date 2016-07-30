@@ -162,7 +162,7 @@ function initMap() {
 
     heatmap = new google.maps.visualization.HeatmapLayer({
         data: heatMapData,
-        map: map
+        map: sdgn
     });
 
 
