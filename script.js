@@ -206,9 +206,20 @@ var styles =
 function initMap() {
 
     $.getJSON("./locations.json", function(data) {
-        console.log(data)
+        console.log(data[0]["polygons"][0])
+
+        firstPolygon = data[0]["polygons"][0];
+
+        for (var i in firstPolygon){
+            firstPolygon[i]["lat"] = firstPolygon[i]["latitude"];
+            firstPolygon[i]["lng"] = firstPolygon[i]["longitude"];
+            delete firstPolygon[i]["latitude"]
+            delete firstPolygon[i]["longitude"]
+        }
+
+
         var poly = new google.maps.Polygon({
-            paths: data[0]["polygons"][0],
+            paths: firstPolygon,
             strokeColor: '#FF0000',
             strokeOpacity: 0.8,
             strokeWeight: 2,
