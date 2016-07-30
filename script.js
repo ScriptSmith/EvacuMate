@@ -110,6 +110,7 @@ function initMap() {
         for (var g in data){
             affectedArea = data[g]
             for (var h in affectedArea["polygons"]){
+                console.log("gon")
                 polygon = affectedArea["polygons"][h]
 
                 for (var i in polygon){
