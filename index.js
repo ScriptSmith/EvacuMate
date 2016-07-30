@@ -5,7 +5,8 @@ const bodyParser = require('body-parser')
 const request = require('request')
 const app = express()
 
-var NodeGeocoder = require('node-geocoder');
+var geocoder = require('geocoder');
+
 
 var options = {
   provider: 'google',
@@ -15,8 +16,6 @@ var options = {
   apiKey: 'AIzaSyC5_74zprCJ8ZZdHJrNbTcGxl6nNdNRlsA', // for Mapquest, OpenCage, Google Premier
   formatter: null         // 'gpx', 'string', ...
 };
-
-var geocoder = NodeGeocoder(options);
 
 app.set('port', (process.env.PORT || 5000))
 
@@ -52,10 +51,10 @@ app.post('/webhook/', function (req, res) {
         if (event.message && event.message.text) {
             let text = event.message.text
 
-            geocoder.geocode(text, function(err, res) {
-                sendTextMessage(sender, "Text received, echo: " + res[0]["country"].substring(0, 200))
+            // Geocoding
+            geocoder.geocode(text, function ( err, data ) {
+                sendTextMessage(sender, data["results"][0]["geometry"])
             });
-
         }
     }
     res.sendStatus(200)
