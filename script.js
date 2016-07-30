@@ -161,7 +161,7 @@ function initMap() {
     });
 
     heatmap = new google.maps.visualization.HeatmapLayer({
-        data: getHeatMapData,
+        data: getHeatMapData(),
         map: map
     });
 
