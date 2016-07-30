@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>EvacuMate</title>
+
+	<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.indigo-pink.min.css">
+	<script defer src="https://code.getmdl.io/1.1.2/material.min.js"></script>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<script src="//cdn.jsdelivr.net/emojione/2.1.2/lib/js/emojione.min.js"></script>
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/emojione/2.1.2/assets/css/emojione.min.css"/>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="script.js"></script>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+  <header class="mdl-layout__header">
+    <div class="mdl-layout__header-row">
+      <!-- Title -->
+      <span class="mdl-layout-title">EvacuMate</span>
+    </div>
+    <!-- Tabs -->
+    <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+      <a href="#fixed-tab-1" class="mdl-layout__tab is-active">Messenger</a>
+			<a href="#fixed-tab-2" class="mdl-layout__tab">Map</a>
+
+    </div>
+  </header>
+
+  <main class="mdl-layout__content">
+    <section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
+        <style>
+            h1 {
+                font-family: sans-serif;
+                font-weight: 500;
+                text-align: center;
+                font-size: 60px;
+            }
+            .center {
+                display: block;
+                width: 25%;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 5%
+            }
+
+            .fb-send-to-messenger.fb_iframe_widget {
+                width: 180px;
+            }
+        </style>
+
+        <h1>A Facebook Messenger Bot</h1>
+
+        <a href="https://www.facebook.com/evacumate/"><img src="icon.png" class="center"></a>
+
+        <script>
+            window.fbAsyncInit = function() {
+                FB.init({
+                    appId: "1720375824892178",
+                    xfbml: true,
+                    version: "v2.6"
+                });
+            };
+
+            (function(d, s, id){
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) { return; }
+                js = d.createElement(s); js.id = id;
+                js.src = "https://connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
+
+        <div class="fb-send-to-messenger center"
+            messenger_app_id="1720375824892178"
+            page_id="313536175653833"
+            data-ref="index"
+            color="blue"
+            size="xlarge">
+        </div>
+
+    </section>
+    <section class="mdl-layout__tab-panel" id="fixed-tab-2">
+        <div id="map"></div>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?callback=initMap&key=AIzaSyA5YWI2Y7rdVv13ZJK_-lNCetk6jJWGfXs">
+        </script>
+
+    </section>
+
+  </main>
+</div>
+</body>
+</html>
