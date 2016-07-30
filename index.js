@@ -76,6 +76,7 @@ app.post('/webhook/', function (req, res) {
         }
 
         if (event.message && !event.message.text) {
+            sendMapMessage(sender, "Do you want to see the map?")
         }
 
         if (event.optin && event.optin.ref == "index"){
