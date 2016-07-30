@@ -158,7 +158,7 @@ function initMap() {
     });
 
     heatmap = new google.maps.visualization.HeatmapLayer({
-        data: heatMapData,
+        data: [],
     });
 
     heatmap.setMap(map);
@@ -178,6 +178,7 @@ function initMap() {
                 for (var i in data){
                     heatMapData.push(new google.maps.LatLng(data[i]["latitude"], data[i]["longitude"]))
                 }
+                heatmap.setData(heatMapData);
             },
             error: function(){
                 console.log("Cannot get data");
