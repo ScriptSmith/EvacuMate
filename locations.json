@@ -3,26 +3,13 @@
         "name": "",
         "details": "",
         "message": "Message for people in this area",
-        "boxes": [
-            {
-                "minLng": 106.5234375,
-                "maxLng": 161.015625,
-                "minLat": -45.33670191,
-                "maxLat": -3.8642546157
-            }
-        ]
-    },
-    {
-        "name": "2",
-        "details": "",
-        "message": "",
-        "boxes": [
-            {
-                "minLng": 10.5234375,
-                "maxLng": 16.015625,
-                "minLat": -4.33670191,
-                "maxLat": -2.8642546157
-            }
+        "polygons": [
+            [
+                {"latitude": 110.390625, "longitude": -7.710992},
+                {"latitude": 153.984375, "longitude": -6.315299},
+                {"latitude": 153.984375, "longitude": -45.089036},
+                {"latitude": 108.984375, "longitude": -42.032974}
+            ]
         ]
     }
 ]

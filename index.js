@@ -8,6 +8,9 @@ const app = express()
 //Geocoding
 var geocoder = require('geocoder');
 
+//Check if inside polygon
+var geolib = require('geolib')
+
 //List of locations
 var locations = require('./locations.json');
 
@@ -82,10 +85,10 @@ function getLocations(senderLocation) {
     for (var i in locations) {
         var location = locations[i]
         for (var j in location){
-            var boxes = location[j]
-            for (var k in boxes){
-                var box = boxes[k]
-                if (senderLocation["lat"] >= box["minLat"] && senderLocation["lat"] <= box["maxLat"] && senderLocation["lng"] >= box["minLng"] && senderLocation["lng"] <= box["maxLng"]){
+            var polygons = location[j]
+            for (var k in polygons){
+                var polygon = polygons[k]
+                if (geolib.isPointInside({"latitude": senderLocation["lat"], "longitude": senderLocation["lng"]}, polygon)){
                     returnedLocations.push(location);
                 }
             }

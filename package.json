@@ -12,6 +12,7 @@
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "geocoder": "^0.2.2",
+    "geolib": "^2.0.21",
     "request": "^2.74.0"
   }
 }
