@@ -5,10 +5,23 @@
         "message": "",
         "boxes": [
             {
-                "minLat": 0,
-                "maxLat": 0,
-                "minLng": 0,
-                "maxLng": 0
+                "minLng": 106.5234375,
+                "maxLng": 161.015625,
+                "minLat": -45.33670191,
+                "maxLat": -3.8642546157
+            }
+        ]
+    },
+    {
+        "name": "2",
+        "details": "",
+        "message": "",
+        "boxes": [
+            {
+                "minLng": 10.5234375,
+                "maxLng": 16.015625,
+                "minLat": -4.33670191,
+                "maxLat": -2.8642546157
             }
         ]
     }

@@ -56,11 +56,9 @@ app.post('/webhook/', function (req, res) {
             let text = event.message.text
 
             // Geocode
-            (function (text, sender) {
+            (function () {
                 geocoder.geocode(text, function ( err, data ) {
-                    senderLocation = data["results"][0]["geometry"]["location"]
-
-                    //Check if in locations file
+                    var senderLocation = data["results"][0]["geometry"]["location"]
                     console.log(getLocations(senderLocation));
                 });
             })();
@@ -72,13 +70,16 @@ app.post('/webhook/', function (req, res) {
 const token = "EAAYcrDXsQRIBAJHdyUwYu1jRJTJmaNHBFWjorn45swL0uRUy9ZBZB29MtzzB3V5shvXgzu3r7oIIJCzZBZCtiZCE7zCJ2vcgz3H8EJhuhZAY8wf0OKgyuFZAmZBkZBXYhVZCiaXWo74jFxnn0HqzP1W87SQPaNdvwEPywXvLWTDX5VvwZDZD"
 
 function getLocations(senderLocation) {
-    returnedLocations = [];
+    var returnedLocations = [];
     for (var i in locations) {
-        location = locations[i]
+        var location = locations[i]
         for (var j in location){
-            var box = location[j]
-            if (senderLocation["lat"] >= box["minLat"] && senderLocation["lat"] <= box["maxLat"] && senderLocation["lng"] >= box["minLng"] && senderLocation["lng"] <= box["maxLng"]){
-                returnedLocations.push(location);
+            var boxes = location[j]
+            for (var k in boxes){
+                var box = boxes[k]
+                if (senderLocation["lat"] >= box["minLat"] && senderLocation["lat"] <= box["maxLat"] && senderLocation["lng"] >= box["minLng"] && senderLocation["lng"] <= box["maxLng"]){
+                    returnedLocations.push(location);
+                }
             }
         }
     }
