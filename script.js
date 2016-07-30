@@ -104,17 +104,17 @@ var styles =
     }
 ]
 
-function info(details){
-    var contentString = "<b>" + details["name"] + "</b><br>" +
-                        "<i>" + details["details"] + "</i><<br>" +
-                        details["message"]
-
-    infoWindow.setContent(contentString);
-    infoWindow.open(map);
-}
 
 function initMap() {
     var infoWindow;
+    function info(details){
+        var contentString = "<b>" + details["name"] + "</b><br>" +
+        "<i>" + details["details"] + "</i><<br>" +
+        details["message"]
+
+        infoWindow.setContent(contentString);
+        infoWindow.open(map);
+    }
 
     $.getJSON("./locations.json", function(data) {
         for (var g in data){
