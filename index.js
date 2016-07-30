@@ -113,7 +113,7 @@ app.post('/webhook/', function (req, res) {
                 , item;
 
               while (item = stream.read()) {
-                sendTextMessage(sender,item["title"]);
+                sendLinkMessage(sender,item["title"],item["link"]);
               }
             });
         }
@@ -167,6 +167,39 @@ function sendMapMessage(sender, text) {
                     {
                       "type":"web_url",
                       "url":"http://evacumate.xyz/map.html",
+                      "title":"Show Map"
+                    }
+                ]
+            }
+        }
+    }
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: {access_token:token},
+        method: 'POST',
+        json: {
+            recipient: {id:sender},
+            message: messageData,
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending messages: ', error);
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error);
+        }
+    })
+}
+function sendLinkMessage(sender, text, link) {
+    let messageData = {
+        "attachment":{
+            "type":"template",
+            "payload":{
+                "template_type":"button",
+                "text": text,
+                "buttons":[
+                    {
+                      "type":"web_url",
+                      "url": link,
                       "title":"Show Map"
                     }
                 ]
