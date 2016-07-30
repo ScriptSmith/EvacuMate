@@ -108,15 +108,6 @@ var styles =
 function initMap() {
     var infoWindow;
 
-    function info(details){
-        var contentString = "<b>" + details["name"] + "</b><br>" +
-        "<i>" + details["details"] + "</i><<br>" +
-        details["message"]
-
-        infoWindow.setContent(contentString);
-        infoWindow.open(map);
-    }
-
     $.getJSON("./locations.json", function(data) {
         for (var g in data){
             affectedArea = data[g]
@@ -140,7 +131,14 @@ function initMap() {
                 });
                 poly.setMap(map);
 
-                poly.addListener('click', function(){info(data[g])})
+                poly.addListener('click', function(data[g]){
+                    var contentString = "<b>" + details["name"] + "</b><br>" +
+                    "<i>" + details["details"] + "</i><<br>" +
+                    details["message"]
+
+                    infoWindow.setContent(contentString);
+                    infoWindow.open(map);
+                })
             }
         }
     })
