@@ -59,7 +59,7 @@ app.post('/webhook/', function (req, res) {
             // Geocode
             (function () {
                 geocoder.geocode(text, function ( err, data ) {
-                    var senderLocation = data["results"][0]["geometry"]["location"]
+                    var senderLocation = data["results"][0]["geometry"]["location"];
                     console.log(getLocations(senderLocation));
                 });
             })();
