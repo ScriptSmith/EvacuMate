@@ -5,7 +5,11 @@ const bodyParser = require('body-parser')
 const request = require('request')
 const app = express()
 
+//Geocoding
 var geocoder = require('geocoder');
+
+//List of locations
+var locations = require('./locations.json');
 
 
 var options = {
@@ -51,16 +55,36 @@ app.post('/webhook/', function (req, res) {
         if (event.message && event.message.text) {
             let text = event.message.text
 
-            // Geocoding
-            geocoder.geocode(text, function ( err, data ) {
-                console.log( data["results"][0]["geometry"])
-            });
+            // Geocode
+            (function (text, sender) {
+                geocoder.geocode(text, function ( err, data ) {
+                    senderLocation = data["results"][0]["geometry"]["location"]
+
+                    //Check if in locations file
+                    console.log(getLocations(senderLocation));
+                });
+            })();
         }
     }
     res.sendStatus(200)
 })
 
 const token = "EAAYcrDXsQRIBAJHdyUwYu1jRJTJmaNHBFWjorn45swL0uRUy9ZBZB29MtzzB3V5shvXgzu3r7oIIJCzZBZCtiZCE7zCJ2vcgz3H8EJhuhZAY8wf0OKgyuFZAmZBkZBXYhVZCiaXWo74jFxnn0HqzP1W87SQPaNdvwEPywXvLWTDX5VvwZDZD"
+
+function getLocations(senderLocation) {
+    returnedLocations = [];
+    for (var i in locations) {
+        location = locations[i]
+        for (var j in location){
+            var box = location[j]
+            if (senderLocation["lat"] >= box["minLat"] && senderLocation["lat"] <= box["maxLat"] && senderLocation["lng"] >= box["minLng"] && senderLocation["lng"] <= box["maxLng"]){
+                returnedLocations.push(location);
+            }
+        }
+    }
+    return returnedLocations;
+}
+
 
 function sendTextMessage(sender, text) {
     let messageData = { text:text }

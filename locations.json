@@ -1,0 +1,15 @@
+[
+    {
+        "name": "",
+        "details": "",
+        "message": "",
+        "boxes": [
+            {
+                "minLat": 0,
+                "maxLat": 0,
+                "minLng": 0,
+                "maxLng": 0
+            }
+        ]
+    }
+]
