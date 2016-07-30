@@ -111,6 +111,15 @@ function toggleHeatmap() {
   heatmap.setMap(heatmap.getMap() ? null : map);
 }
 
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
 function initMap() {
     var infoWindow;
 
@@ -129,12 +138,13 @@ function initMap() {
                     delete polygon[i]["longitude"]
                 }
 
+                var randColor = getRandomColor();
                 var poly = new google.maps.Polygon({
                     paths: polygon,
-                    strokeColor: '#FF0000',
+                    strokeColor: randColor,
                     strokeOpacity: 0.8,
                     strokeWeight: 2,
-                    fillColor: '#FF0000',
+                    fillColor: randColor,
                     fillOpacity: 0.15
                 });
                 poly.setMap(map);
