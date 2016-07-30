@@ -165,7 +165,6 @@ function initMap() {
     infoWindow = new google.maps.InfoWindow();
 
     setInterval(function(){
-        console.log("ran")
         $.ajax({
             url: "http://flood-risk-api.app.skyops.io/address-flood-risk/geo-search",
             type: 'POST',
@@ -174,6 +173,7 @@ function initMap() {
             headers: {"x-iag-api-key": "iag-gov-hack-api"},
             data: '{"longitude": ' + map.getCenter().lng() + ',"latitude": ' + map.getCenter().lat() +',"max_distance": 100,"limit": 20}',
             success: function (data) {
+                console.log(data)
                 for (var i in data){
                     var point = data[i]
                     console.log(point["latitude"] + " " + point["longitude"])
