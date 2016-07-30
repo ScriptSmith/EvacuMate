@@ -108,7 +108,12 @@ var styles =
 function initMap() {
     var infoWindow;
 
-    var heatMapData = [];
+    var heatMapData = [
+        new google.maps.LatLng(37.782, -122.447),
+        new google.maps.LatLng(37.782, -122.445),
+        new google.maps.LatLng(37.782, -122.443),
+        new google.maps.LatLng(37.782, -122.441),
+    ];
 
     function getHeatMapData(){
         return heatMapData;
@@ -153,36 +158,17 @@ function initMap() {
         }
     })
 
-    /* Data points defined as an array of LatLng objects */
-    var heatmapData = [
-      new google.maps.LatLng(37.782, -122.447),
-      new google.maps.LatLng(37.782, -122.445),
-      new google.maps.LatLng(37.782, -122.443),
-      new google.maps.LatLng(37.782, -122.441),
-      new google.maps.LatLng(37.782, -122.439),
-      new google.maps.LatLng(37.782, -122.437),
-      new google.maps.LatLng(37.782, -122.435),
-      new google.maps.LatLng(37.785, -122.447),
-      new google.maps.LatLng(37.785, -122.445),
-      new google.maps.LatLng(37.785, -122.443),
-      new google.maps.LatLng(37.785, -122.441),
-      new google.maps.LatLng(37.785, -122.439),
-      new google.maps.LatLng(37.785, -122.437),
-      new google.maps.LatLng(37.785, -122.435)
-    ];
-
-    var sanFrancisco = new google.maps.LatLng(37.774546, -122.433523);
 
     map = new google.maps.Map(document.getElementById('map'), {
-      center: sanFrancisco,
-      zoom: 13,
-      mapTypeId: 'satellite'
+        zoom: 9,
+        center: {lat: -27.4999514, lng: 153.0154763},
+        styles: styles
     });
 
-    var heatmap = new google.maps.visualization.HeatmapLayer({
-      data: heatmapData
+    heatmap = new google.maps.visualization.HeatmapLayer({
+        data: heatMapData,
+        map: map
     });
-    heatmap.setMap(map);
 
 
     infoWindow = new google.maps.InfoWindow();
