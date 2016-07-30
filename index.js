@@ -61,6 +61,13 @@ app.post('/webhook/', function (req, res) {
         console.log("~~~~~~~~~~~~~~~~~~~")
         console.log(event)
         console.log("~~~~~~~~~~~~~~~~~~~")
+
+        if (event.optin && event.optin.ref == "index" || event.message.text == "welcome"){
+            sendTextMessage(sender, "G'day!")
+            sendTextMessage(sender, "Welcome to EvacuMate. During natural disasters, you can send me messages and I'll tell you about the status of a location.")
+            sendTextMessage(sender, "Which location would you like to know about?")
+        }
+
         if (event.message && event.message.text) {
             let text = event.message.text;
 
@@ -71,18 +78,18 @@ app.post('/webhook/', function (req, res) {
                     console.log(data)
                     console.log("%%%%%%%%%%%%%%%%%%%")
                     if (data["results"].length < 1){
-                        sendTextMessage(sender, text + " isn't a location I understand")
+                        sendTextMessage(sender, text + " isn't a location that I understand")
                     } else {
                         var senderLocation = data["results"][0]["geometry"]["location"];
                         var newLocations = getLocations(senderLocation);
 
                         if (newLocations.length < 1){
-                            sendTextMessage(sender, "No warnings for " + text)
+                            sendTextMessage(sender, "There are no warnings in " + text)
                         } else {
                             sendMapMessage(sender, newLocations[0]["message"])
 
-                            checkCommunityInfrastructure(sender,senderLocation)
-                            checkSESBuildings(sender,senderLocation)
+                            checkCommunityInfrastructure(sender,senderLocation);
+                            checkSESBuildings(sender,senderLocation);
                         }
                     }
                 }, {"key" : process.env.GMAPS_API});
@@ -93,10 +100,6 @@ app.post('/webhook/', function (req, res) {
             sendMainMessage(sender)
         }
 
-        if (event.optin && event.optin.ref == "index"){
-            sendTextMessage(sender, "Welcome to EvacuMate. During natural disasters, you can send me messages and I'll tell you about the status of a location.")
-            sendTextMessage(sender, "Which location would you like to know about?")
-        }
 
         if (event.postback && event.postback.payload == "warnings"){
             var req = request('http://www.bom.gov.au/fwo/IDZ00056.warnings_qld.xml')
@@ -315,6 +318,57 @@ function checkCommunityInfrastructure(sender, location){
                 }
 
                 sendLinkMessage(sender, "Your nearest Brisbane community centre is " + maximum["name"], "https://www.google.com/maps/?q=" + maximum["lat"] + "," + maximum['lng'])
+            });
+        });
+    }).on('error', function(e){
+          console.log("Got an error: ", e);
+    });
+}
+
+
+function checkWifiHotspots(sender, location){
+    var url = 'https://www.data.brisbane.qld.gov.au/data/dataset/17fb3724-ecfc-4802-8f16-62839fb73fc0/resource/9851b9fd-8a46-4268-9ece-4e45b143e8c9/download/WiFi-dataset-Open-data.csv';
+
+    https.get(url, function(res){
+        var body = '';
+
+        res.on('data', function(chunk){
+            body += chunk;
+        });
+
+        res.on('end', function(){
+            parse(body, {comment: '#'}, function(err, output){
+                output = output.slice(1, output.length + 1)
+
+                var maximum = {
+                    name: "None",
+                    lat: -27.509489,
+                    lng: 153.03389,
+                    distance: 100000
+                }
+
+                for (var i in output){
+                    var hotspot = output[i]
+
+                    var name = hotspot[0]
+                    var lat = parseFloat(hotspot[1])
+                    var lng = parseFloat(hotspot[2])
+
+                    var distance = geolib.getDistance(
+                        {latitude: lat, longitude: lng},
+                        {latitude: location["lat"], longitude: location["lng"]}
+                    )
+
+                    if (distance < maximum["distance"]){
+                        maximum["name"] = name
+                        maximum["lat"] = lat
+                        maximum["lng"] = lng
+                        maximum["distance"] = distance
+                    }
+
+                }
+
+                sendLinkMessage(sender, "Your nearest WiFi hotspot is " + maximum["name"], "https://www.google.com/maps/?q=" + maximum["lat"] + "," + maximum['lng'])
             });
         });
     }).on('error', function(e){
