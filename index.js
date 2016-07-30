@@ -62,7 +62,7 @@ app.post('/webhook/', function (req, res) {
         // console.log(event)
         // console.log("~~~~~~~~~~~~~~~~~~~")
 
-        if (event.optin && event.optin.ref == "index" || event.message.text == "welcome"){
+        if (event.optin && event.optin.ref == "index"){
             sendTextMessage(sender, "G'day!")
             sendTextMessage(sender, "Welcome to EvacuMate. During natural disasters, you can send me messages and I'll tell you about the status of a location.")
             sendTextMessage(sender, "Which location would you like to know about?")
