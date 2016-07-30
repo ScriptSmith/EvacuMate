@@ -173,7 +173,7 @@ function initMap() {
             dataType: 'json',
             contentType: 'application/json',
             headers: {"x-iag-api-key": "iag-gov-hack-api"},
-            data: '{"longitude": ' + map.getCenter().lng() + ',"latitude": ' + map.getCenter().lat() +',"max_distance": 1000,"limit": 20}',
+            data: '{"longitude": ' + map.getCenter().lng() + ',"latitude": ' + map.getCenter().lat() +',"max_distance": 100,"limit": 50}',
             success: function (data) {
                 for (var i in data){
                     heatMapData.push(new google.maps.LatLng(data[i]["latitude"], data[i]["longitude"]))
