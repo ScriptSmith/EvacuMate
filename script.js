@@ -107,6 +107,7 @@ var styles =
 
 function initMap() {
     var infoWindow;
+
     function info(details){
         var contentString = "<b>" + details["name"] + "</b><br>" +
         "<i>" + details["details"] + "</i><<br>" +
@@ -155,6 +156,6 @@ function initMap() {
 
     map.setOptions({styles: styles});
 
-    InfoWindow = new google.maps.InfoWindow();
+    infoWindow = new google.maps.InfoWindow();
 
 }
