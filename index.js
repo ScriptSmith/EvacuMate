@@ -66,7 +66,11 @@ app.post('/webhook/', function (req, res) {
                         var senderLocation = data["results"][0]["geometry"]["location"];
                         var newLocations = getLocations(senderLocation);
 
-                        sendTextMessage(sender, newLocations[0]["message"])
+                        if (newLocations.length < 1){
+                            sendTextMessage(sender, "No warnings for " + text)
+                        } else {
+                            sendTextMessage(sender, newLocations[0]["message"])
+                        }
                     }
                 });
             })();
