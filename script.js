@@ -104,12 +104,7 @@ var styles =
     }
 ]
 
-var heatMapData = [
-    new google.maps.LatLng(37.782, -122.447),
-    new google.maps.LatLng(37.782, -122.445),
-    new google.maps.LatLng(37.782, -122.443),
-    new google.maps.LatLng(37.782, -122.441),
-];
+var heatMapData = [];
 
 function initMap() {
     var infoWindow;
