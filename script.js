@@ -159,7 +159,7 @@ function initMap() {
 
     console.log('{"longitude": ' + map.getCenter().lng() + ',"latitude": ' + map.getCenter().lat() +',"max_distance": 100,"limit": 20}')
 
-    setTimeout(function(){
+    setInterval(function(){
         console.log("ran")
         $.ajax({
             url: "http://flood-risk-api.app.skyops.io/address-flood-risk/geo-search",
@@ -169,7 +169,7 @@ function initMap() {
             headers: {"x-iag-api-key": "iag-gov-hack-api"},
             data: '{"longitude": ' + map.getCenter().lng() + ',"latitude": ' + map.getCenter().lat() +',"max_distance": 100,"limit": 20}',
             success: function (data) {
-                alert(JSON.stringify(data));
+                console.log(JSON.stringify(data));
             },
             error: function(){
                 alert("Cannot get data");
