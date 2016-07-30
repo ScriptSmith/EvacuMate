@@ -67,7 +67,7 @@ app.post('/webhook/', function (req, res) {
                 });
             })();
         }
-        if (event.postback && event["postback"]["payload"] == "index"){
+        if (event.optin && event.optin.ref == "index"){
             sendTextMessage(sender, "Welcome to Evacumate. Which location would you like to know about?")
         }
     }
