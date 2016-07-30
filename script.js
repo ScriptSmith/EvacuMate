@@ -1,4 +1,8 @@
 var heatMapData = [];
+
+function getHeatMapData(){
+    return heatMapData;
+}
 var styles =
 [
     {
@@ -151,13 +155,12 @@ function initMap() {
 
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 9,
-        center: {lat: -27.4999514, lng: 153.0154763}
+        center: {lat: -27.4999514, lng: 153.0154763},
+        styles: styles
     });
 
-    map.setOptions({styles: styles});
-    
     heatmap = new google.maps.visualization.HeatmapLayer({
-        data: heatMapData,
+        data: getHeatMapData,
         map: map
     });
 
