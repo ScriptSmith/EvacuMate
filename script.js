@@ -206,7 +206,7 @@ var styles =
 function initMap() {
 
     $.getJSON("./locations.json", function(data) {
-
+        console.log(data)
     })
 
     map = new google.maps.Map(document.getElementById('map'), {
