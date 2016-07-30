@@ -167,8 +167,9 @@ function initMap() {
 
     heatmap = new google.maps.visualization.HeatmapLayer({
         data: heatMapData,
-        map: map
     });
+
+    heatmap.setMap(map);
 
 
     infoWindow = new google.maps.InfoWindow();
