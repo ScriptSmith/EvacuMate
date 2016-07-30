@@ -136,11 +136,11 @@ function initMap() {
 
                 poly.addListener('click', function(){
                     var contentString = "<b>" + this.objDetails["name"] + "</b><br>" +
-                    "<i>" + this.objDetails["details"] + "</i><<br>" +
+                    "<i>" + this.objDetails["details"] + "</i><br>" +
                     this.objDetails["message"]
 
                     infoWindow.setContent(contentString);
-                    infoWindow.setPosition(this.latLng); 
+                    infoWindow.setPosition(this.latLng);
                     infoWindow.open(map);
                 })
             }
