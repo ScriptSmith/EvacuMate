@@ -84,15 +84,12 @@ function getLocations(senderLocation) {
     var returnedLocations = [];
     for (var i in locations) {
         var location = locations[i]
-        for (var j in location){
-            var polygons = location[j]
-            for (var k in polygons){
-                var polygon = polygons[k]
-                console.log('poly')
-                console.log(polygon)
-                if (geolib.isPointInside({"latitude": senderLocation["lat"], "longitude": senderLocation["lng"]}, polygon)){
-                    returnedLocations.push(location);
-                }
+        for (var j in polygons){
+            var polygon = polygons[j]
+            console.log('poly')
+            console.log(polygon)
+            if (geolib.isPointInside({"latitude": senderLocation["lat"], "longitude": senderLocation["lng"]}, polygon)){
+                returnedLocations.push(location);
             }
         }
     }
