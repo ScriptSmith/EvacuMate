@@ -104,7 +104,17 @@ var styles =
     }
 ]
 
+function info(details){
+    var contentString = "<b>" + details["name"] + "</b><br>" +
+                        "<i>" + details["details"] + "</i><<br>" +
+                        details["message"]
+
+    infoWindow.setContent(contentString);
+    infoWindow.open(map);
+}
+
 function initMap() {
+    var infoWindow;
 
     $.getJSON("./locations.json", function(data) {
         for (var g in data){
@@ -128,6 +138,8 @@ function initMap() {
                     fillOpacity: 0.35
                 });
                 poly.setMap(map);
+
+                poly.addListener('click', info(data[g]))
             }
         }
 
@@ -142,5 +154,7 @@ function initMap() {
     });
 
     map.setOptions({styles: styles});
+
+    InfoWindow = new google.maps.InfoWindow();
 
 }
