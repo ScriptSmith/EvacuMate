@@ -137,7 +137,7 @@ function initMap() {
                     data[g]["message"]
 
                     infoWindow.setContent(contentString);
-                    infoWindow.open(map);
+                    infoWindow.open(map, polygon);
                 })
             }
         }
