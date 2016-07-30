@@ -82,6 +82,7 @@ app.post('/webhook/', function (req, res) {
                             sendMapMessage(sender, newLocations[0]["message"])
 
                             checkCommunityInfrastructure(sender,senderLocation)
+                            checkSESBuildings(sender,senderLocation)
                         }
                     }
                 }, {"key" : process.env.GMAPS_API});
