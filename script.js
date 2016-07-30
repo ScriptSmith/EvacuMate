@@ -185,13 +185,13 @@ function initMap() {
                 console.log(data)
                 for (var i in data){
                     var point = data[i]
-                    var heatMarker = new google.maps.LatLng({lat: parseInt(point["latitude"]), lng: parseInt(point["longitude"])});
+                    var heatMarker = new google.maps.LatLng(parseInt(point["latitude"]), parseInt(point["longitude"]));
                     heatMapData.push(heatMarker)
                     console.log(heatMapData)
                 }
             },
             error: function(){
-                alert("Cannot get data");
+                console.log("Cannot get data");
             }
         });
     }, 5000)
