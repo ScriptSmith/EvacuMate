@@ -66,7 +66,7 @@ app.post('/webhook/', function (req, res) {
                         var newLocations = getLocations(senderLocation);
 
                         if (newLocations.length < 1){
-                            sendMapMessage(sender, "No warnings for " + text)
+                            sendTextMessage(sender, "No warnings for " + text)
                         } else {
                             sendMapMessage(sender, newLocations[0]["message"])
                         }
