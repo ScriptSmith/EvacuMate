@@ -1,8 +1,8 @@
 [
     {
         "name": "Ipswich",
-        "details": "Mild flooding",
-        "message": "There is mild flooding in ipswich. Call 132 500 in case of emergency",
+        "details": "Sample Description 1",
+        "message": "Sample Description 2",
         "polygons": [
             [
                 {"longitude": 152.725067,"latitude":-27.468069},
@@ -21,8 +21,8 @@
     },
     {
         "name": "Gold Coast",
-        "details": "Heavy flooding",
-        "message": "Dangerous floods from Coomera to Coolangatta. Call 132 500 in case of emergency",
+        "details": "Sample Description 1",
+        "message": "Sample Description 2",
         "polygons": [
             [
                 {"longitude":153.257904,"latitude":-27.830575},
