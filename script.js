@@ -164,8 +164,6 @@ function initMap() {
 
     infoWindow = new google.maps.InfoWindow();
 
-    console.log('{"longitude": ' + map.getCenter().lng() + ',"latitude": ' + map.getCenter().lat() +',"max_distance": 100,"limit": 20}')
-
     setInterval(function(){
         console.log("ran")
         $.ajax({
