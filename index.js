@@ -57,8 +57,11 @@ app.post('/webhook/', function (req, res) {
             (function () {
                 geocoder.geocode(text + " Australia", function ( err, data ) {
                     if (data["results"].length < 1){
-                        sendTextMessage(sender,text + " isn't a location I understand")
+                        sendTextMessage(sender, text + " isn't a location I understand")
                     } else {
+                        if (data["results"]["partial_match"] && data["results"]["partial_match"] == true){
+                            sendTextMessage(sender, "I'm guessing you mean: " + data["results"["formatted_address"]])
+                        }
                         console.log("%%%%%%%%%%%%%%%%%%%")
                         console.log(data)
                         console.log("%%%%%%%%%%%%%%%%%%%")
