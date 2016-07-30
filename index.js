@@ -88,6 +88,8 @@ function getLocations(senderLocation) {
             var polygons = location[j]
             for (var k in polygons){
                 var polygon = polygons[k]
+                console.log('poly')
+                console.log(polygon)
                 if (geolib.isPointInside({"latitude": senderLocation["lat"], "longitude": senderLocation["lng"]}, polygon)){
                     returnedLocations.push(location);
                 }
