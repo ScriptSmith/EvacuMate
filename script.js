@@ -131,7 +131,8 @@ function initMap() {
                 });
                 poly.setMap(map);
 
-                poly.objDetails = data[g]
+                poly.objDetails = data[g];
+                poly.latLng = polygon[0];
 
                 poly.addListener('click', function(){
                     var contentString = "<b>" + this.objDetails["name"] + "</b><br>" +
@@ -139,6 +140,7 @@ function initMap() {
                     this.objDetails["message"]
 
                     infoWindow.setContent(contentString);
+                    infoWindow.setPosition(this.latLng); 
                     infoWindow.open(map);
                 })
             }
