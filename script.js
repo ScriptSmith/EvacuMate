@@ -176,10 +176,7 @@ function initMap() {
             data: '{"longitude": ' + map.getCenter().lng() + ',"latitude": ' + map.getCenter().lat() +',"max_distance": 100,"limit": 20}',
             success: function (data) {
                 for (var i in data){
-                    var point = data[i]
-                    console.log({lat: point["latitude"], lng: point["longitude"]})
-                    var heatMarker = new google.maps.LatLng({lat: point["latitude"], lng: point["longitude"]});
-                    heatMapData.push(heatMarker)
+                    heatMapData.push(new google.maps.LatLng(data[i]["latitude"], data[i]["longitude"]))
                 }
             },
             error: function(){
