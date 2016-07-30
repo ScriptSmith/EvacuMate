@@ -133,7 +133,7 @@ function initMap() {
 
                 poly.objDetails = data[g]
 
-                poly.addListener('click', function(data[g]){
+                poly.addListener('click', function(){
                     var contentString = "<b>" + this.objDetails["name"] + "</b><br>" +
                     "<i>" + this.objDetails["details"] + "</i><<br>" +
                     this.objDetails["message"]
