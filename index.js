@@ -352,8 +352,8 @@ function checkWifiHotspots(sender, location){
                     var hotspot = output[i]
 
                     var name = hotspot[0]
-                    var lat = parseFloat(hotspot[1])
-                    var lng = parseFloat(hotspot[2])
+                    var lat = parseFloat(hotspot[3])
+                    var lng = parseFloat(hotspot[4])
 
                     var distance = geolib.getDistance(
                         {latitude: lat, longitude: lng},
@@ -375,6 +375,7 @@ function checkWifiHotspots(sender, location){
     }).on('error', function(e){
           console.log("Got an error: ", e);
     });
+
 }
 
 function checkSESBuildings(sender, location){
