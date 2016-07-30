@@ -74,6 +74,11 @@ app.post('/webhook/', function (req, res) {
                 }, {"key" : process.env.GMAPS_API});
             })();
         }
+
+        if (event.message && !event.message.text) {
+            sendMapMessage(sender)
+        }
+
         if (event.optin && event.optin.ref == "index"){
             sendTextMessage(sender, "Welcome to EvacuMate. During natural disasters, you can send me messages and I'll tell you about the status of a location.")
             sendTextMessage(sender, "Which location would you like to know about?")
@@ -117,6 +122,42 @@ function sendTextMessage(sender, text) {
         }
     })
 }
+function sendMapMessage(sender) {
+    let messageData = {
+        "attachment":{
+            "type":"template",
+            "payload":{
+                "template_type":"button",
+                "text":"Do you want to see the map?",
+                "buttons":[
+                    {
+                      "type":"web_url",
+                      "url":"http://evacumate.xyz/map.html",
+                      "title":"Show Map"
+                    }
+                ]
+            }
+        }
+    }
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: {access_token:token},
+        method: 'POST',
+        json: {
+            recipient: {id:sender},
+            message: messageData,
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending messages: ', error);
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error);
+        }
+    })
+}
+
+
+
 
 if (process.env.TESTING == 1){
     console.log("gotcha");
