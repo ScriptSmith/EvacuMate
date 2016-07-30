@@ -131,13 +131,15 @@ function initMap() {
                 });
                 poly.setMap(map);
 
-                poly.addListener('click', function(){
-                    var contentString = "<b>" + data[g]["name"] + "</b><br>" +
-                    "<i>" + data[g]["details"] + "</i><<br>" +
-                    data[g]["message"]
+                poly.objDetails = data[g]
+
+                poly.addListener('click', function(data[g]){
+                    var contentString = "<b>" + this.objDetails["name"] + "</b><br>" +
+                    "<i>" + this.objDetails["details"] + "</i><<br>" +
+                    this.objDetails["message"]
 
                     infoWindow.setContent(contentString);
-                    infoWindow.open(map, polygon);
+                    infoWindow.open(map);
                 })
             }
         }
