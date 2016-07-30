@@ -160,6 +160,7 @@ function initMap() {
     console.log('{"longitude": ' + map.getCenter().lng() + ',"latitude": ' + map.getCenter().lat() +',"max_distance": 100,"limit": 20}')
 
     setTimeout(function(){
+        console.log("ran")
         $.ajax({
             url: "http://flood-risk-api.app.skyops.io/address-flood-risk/geo-search",
             type: 'POST',
