@@ -53,7 +53,7 @@ app.post('/webhook/', function (req, res) {
 
             // Geocoding
             geocoder.geocode(text, function ( err, data ) {
-                sendTextMessage(sender, data["results"][0]["geometry"])
+                console.log( data["results"][0]["geometry"])
             });
         }
     }
