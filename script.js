@@ -187,8 +187,8 @@ function initMap() {
                     var point = data[i]
                     var heatMarker = new google.maps.LatLng(parseInt(point["latitude"]), parseInt(point["longitude"]));
                     heatMapData.push(heatMarker)
-                    console.log(heatMapData)
                 }
+                console.log(heatMapData)
             },
             error: function(){
                 console.log("Cannot get data");
