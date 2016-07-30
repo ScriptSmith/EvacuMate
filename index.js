@@ -66,11 +66,9 @@ app.post('/webhook/', function (req, res) {
                         var newLocations = getLocations(senderLocation);
 
                         if (newLocations.length < 1){
-                            sendTextMessage(sender, "No warnings for " + text)
-                            sendMapMessage(sender)
+                            sendMapMessage(sender, "No warnings for " + text)
                         } else {
-                            sendTextMessage(sender, newLocations[0]["message"])
-                            sendMapMessage(sender)
+                            sendMapMessage(sender, newLocations[0]["message"])
                         }
                     }
                 }, {"key" : process.env.GMAPS_API});
@@ -123,13 +121,13 @@ function sendTextMessage(sender, text) {
         }
     })
 }
-function sendMapMessage(sender) {
+function sendMapMessage(sender, text) {
     let messageData = {
         "attachment":{
             "type":"template",
             "payload":{
                 "template_type":"button",
-                "text":"Do you want to see the map?",
+                "text": text,
                 "buttons":[
                     {
                       "type":"web_url",
