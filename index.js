@@ -44,6 +44,7 @@ app.post('/webhook/', function (req, res) {
     for (let i = 0; i < messaging_events.length; i++) {
         let event = req.body.entry[0].messaging[i]
         let sender = event.sender.id
+        console.log(event)
         if (event.message && event.message.text) {
             let text = event.message.text;
             console.log("~ Message: '" + text + "'");
@@ -67,7 +68,7 @@ app.post('/webhook/', function (req, res) {
             })();
         }
         if (event.postback && event["postback"]["payload"] == "index"){
-            sendTextMessage(sender, "Welcome to Evacumate. Which location would you like to know about")
+            sendTextMessage(sender, "Welcome to Evacumate. Which location would you like to know about?")
         }
     }
     res.sendStatus(200)
