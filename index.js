@@ -71,7 +71,7 @@ app.post('/webhook/', function (req, res) {
                             sendTextMessage(sender, newLocations[0]["message"])
                         }
                     }
-                });
+                }, {"key" : process.env.GMAPS_API});
             })();
         }
         if (event.optin && event.optin.ref == "index"){
