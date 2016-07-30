@@ -310,7 +310,7 @@ function checkCommunityInfrastructure(sender, location){
 
                 }
 
-                sendLinkMessage(sender, "Your nearest community centre is " + maximum["name"], "https://www.google.com/maps/?q=" + maximum["lat"] + "," + maximum['lng'])
+                sendLinkMessage(sender, "Your nearest Brisbane community centre is " + maximum["name"], "https://www.google.com/maps/?q=" + maximum["lat"] + "," + maximum['lng'])
             });
         });
     }).on('error', function(e){
