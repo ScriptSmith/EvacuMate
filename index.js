@@ -56,63 +56,30 @@ app.post('/webhook/', function (req, res) {
         if (event.message && event.message.text) {
             let text = event.message.text;
 
-            if (text != "warnings"){
-                // Geocode
-                (function () {
-                    geocoder.geocode(text + " Queensland", function ( err, data ) {
-                        console.log("%%%%%%%%%%%%%%%%%%%")
-                        console.log(data)
-                        console.log("%%%%%%%%%%%%%%%%%%%")
-                        if (data["results"].length < 1){
-                            sendTextMessage(sender, text + " isn't a location I understand")
+            // Geocode
+            (function () {
+                geocoder.geocode(text + " Queensland", function ( err, data ) {
+                    console.log("%%%%%%%%%%%%%%%%%%%")
+                    console.log(data)
+                    console.log("%%%%%%%%%%%%%%%%%%%")
+                    if (data["results"].length < 1){
+                        sendTextMessage(sender, text + " isn't a location I understand")
+                    } else {
+                        var senderLocation = data["results"][0]["geometry"]["location"];
+                        var newLocations = getLocations(senderLocation);
+
+                        if (newLocations.length < 1){
+                            sendTextMessage(sender, "No warnings for " + text)
                         } else {
-                            var senderLocation = data["results"][0]["geometry"]["location"];
-                            var newLocations = getLocations(senderLocation);
-
-                            if (newLocations.length < 1){
-                                sendTextMessage(sender, "No warnings for " + text)
-                            } else {
-                                sendMapMessage(sender, newLocations[0]["message"])
-                            }
+                            sendMapMessage(sender, newLocations[0]["message"])
                         }
-                    }, {"key" : process.env.GMAPS_API});
-                })();
-            } else {
-                var req = request('http://www.bom.gov.au/fwo/IDZ00056.warnings_qld.xml')
-                  , feedparser = new FeedParser();
-
-                req.on('error', function (error) {
-                  // handle any request errors
-                });
-                req.on('response', function (res) {
-                  var stream = this;
-
-                  if (res.statusCode != 200) return this.emit('error', new Error('Bad status code'));
-
-                  stream.pipe(feedparser);
-                });
-
-
-                feedparser.on('error', function(error) {
-                  // always handle errors
-                });
-                feedparser.on('readable', function() {
-                  // This is where the action is!
-                  var stream = this
-                    , meta = this.meta // **NOTE** the "meta" is always available in the context of the feedparser instance
-                    , item;
-
-                  while (item = stream.read()) {
-                    sendTextMessage(sender,item["title"]);
-                  }
-                });
-
-            }
-
+                    }
+                }, {"key" : process.env.GMAPS_API});
+            })();
         }
 
         if (event.message && !event.message.text) {
-            sendMapMessage(sender, "Do you want to see the map?")
+            sendMainMessage(sender)
         }
 
         if (event.optin && event.optin.ref == "index"){
@@ -191,10 +158,78 @@ function sendMapMessage(sender, text) {
         }
     })
 }
-
-
-
-
-if (process.env.TESTING == 1){
-    console.log("gotcha");
+function sendMainMessage(sender) {
+    let messageData = {
+        "attachment":{
+            "type":"template",
+            "payload":{
+                "template_type":"button",
+                "text": "Options:",
+                "buttons":[
+                    {
+                      "type":"web_url",
+                      "url":"http://evacumate.xyz/map.html",
+                      "title":"Show map"
+                    },
+                    {
+                        "type":"postback",
+                        "title":"View weather warnings",
+                        "payload":"warnings"
+                    }
+                ]
+            }
+        }
+    }
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: {access_token:token},
+        method: 'POST',
+        json: {
+            recipient: {id:sender},
+            message: messageData,
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending messages: ', error);
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error);
+        }
+    })
 }
+
+// var req = request('http://www.bom.gov.au/fwo/IDZ00056.warnings_qld.xml')
+//   , feedparser = new FeedParser();
+//
+// req.on('error', function (error) {
+//   // handle any request errors
+// });
+// req.on('response', function (res) {
+//   var stream = this;
+//
+//   if (res.statusCode != 200) return this.emit('error', new Error('Bad status code'));
+//
+//   stream.pipe(feedparser);
+// });
+//
+//
+// feedparser.on('error', function(error) {
+//   // always handle errors
+// });
+// feedparser.on('readable', function() {
+//   // This is where the action is!
+//   var stream = this
+//     , meta = this.meta // **NOTE** the "meta" is always available in the context of the feedparser instance
+//     , item;
+//
+//   while (item = stream.read()) {
+//     sendTextMessage(sender,item["title"]);
+//   }
+// });
+//
+//
+//
+//
+//
+// if (process.env.TESTING == 1){
+//     console.log("gotcha");
+// }
