@@ -69,5 +69,50 @@
                 {"longitude":151.825562,"latitude":-27.415662}
             ]
         ]
+    },
+    {
+        "name": "Bribie Island and Caboolture",
+        "details": "Mild hailstorms",
+        "message": "Drivers are encouraged to exercise caution.",
+        "polygons": [
+            [
+                {"longitude":153.072510,"latitude":-26.907375},
+                {"longitude":153.045044,"latitude":-26.995513},
+                {"longitude":153.110962,"latitude":-27.068909},
+                {"longitude":153.209839,"latitude":-27.073800},
+                {"longitude":153.237305,"latitude":-26.990619},
+                {"longitude":153.187866,"latitude":-26.912274},
+                {"longitude":153.083496,"latitude":-26.897578},
+                {"longitude":153.072510,"latitude":-26.907375}
+            ],
+            [
+                {"longitude":152.990112,"latitude":-27.027324},
+                {"longitude":152.904968,"latitude":-27.017537},
+                {"longitude":152.866516,"latitude":-27.073800},
+                {"longitude":152.902222,"latitude":-27.137368},
+                {"longitude":153.023071,"latitude":-27.144701},
+                {"longitude":153.047791,"latitude":-27.071355},
+                {"longitude":153.025818,"latitude":-27.027324},
+                {"longitude":152.990112,"latitude":-27.027324}
+            ],
+            [
+                {"longitude":152.723694,"latitude":-27.227768},
+                {"longitude":152.677002,"latitude":-27.208228},
+                {"longitude":152.646790,"latitude":-27.227768},
+                {"longitude":152.627563,"latitude":-27.271720},
+                {"longitude":152.586365,"latitude":-27.242421},
+                {"longitude":152.534180,"latitude":-27.198457},
+                {"longitude":152.495728,"latitude":-27.254630},
+                {"longitude":152.567139,"latitude":-27.313214},
+                {"longitude":152.649536,"latitude":-27.327855},
+                {"longitude":152.674255,"latitude":-27.279043},
+                {"longitude":152.715454,"latitude":-27.288808},
+                {"longitude":152.751160,"latitude":-27.244863},
+                {"longitude":152.784119,"latitude":-27.261954},
+                {"longitude":152.817078,"latitude":-27.225326},
+                {"longitude":152.786865,"latitude":-27.188685},
+                {"longitude":152.751160,"latitude":-27.213114},
+            ]
+        ]
     }
 ]
