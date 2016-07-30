@@ -1,8 +1,3 @@
-var heatMapData = [];
-
-function getHeatMapData(){
-    return heatMapData;
-}
 var styles =
 [
     {
@@ -112,6 +107,12 @@ var styles =
 
 function initMap() {
     var infoWindow;
+
+    var heatMapData = [];
+
+    function getHeatMapData(){
+        return heatMapData;
+    }
 
     $.getJSON("./locations.json", function(data) {
         for (var g in data){
