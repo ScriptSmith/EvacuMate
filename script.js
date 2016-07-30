@@ -140,12 +140,9 @@ function initMap() {
                 });
                 poly.setMap(map);
 
-                poly.addListener('click', info(data[g]))
+                poly.addListener('click', function(){info(data[g])})
             }
         }
-
-
-
     })
 
 
