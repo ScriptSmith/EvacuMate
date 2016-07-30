@@ -84,8 +84,8 @@ function getLocations(senderLocation) {
     var returnedLocations = [];
     for (var i in locations) {
         var location = locations[i]
-        for (var j in polygons){
-            var polygons = location[j]["polygons"]
+        for (var j in location["polygons"]){
+            var polygons = location[j]["polygons"];
             for (var k in polygons){
                 var polygon = polygons[k]
                 console.log('poly')
