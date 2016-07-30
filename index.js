@@ -59,9 +59,6 @@ app.post('/webhook/', function (req, res) {
                     if (data["results"].length < 1){
                         sendTextMessage(sender, text + " isn't a location I understand")
                     } else {
-                        if (data["results"]["partial_match"] && data["results"]["partial_match"] == true){
-                            sendTextMessage(sender, "I'm guessing you mean: " + data["results"["formatted_address"]])
-                        }
                         console.log("%%%%%%%%%%%%%%%%%%%")
                         console.log(data)
                         console.log("%%%%%%%%%%%%%%%%%%%")
@@ -71,6 +68,7 @@ app.post('/webhook/', function (req, res) {
                         if (newLocations.length < 1){
                             sendTextMessage(sender, "No warnings for " + text)
                         } else {
+                            sendTextMessage(sender, "Message for: " + data["results"]["formatted_address"])
                             sendTextMessage(sender, newLocations[0]["message"])
                         }
                     }
