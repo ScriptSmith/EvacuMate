@@ -131,10 +131,10 @@ function initMap() {
                 });
                 poly.setMap(map);
 
-                poly.addListener('click', function(data[g]){
-                    var contentString = "<b>" + details["name"] + "</b><br>" +
-                    "<i>" + details["details"] + "</i><<br>" +
-                    details["message"]
+                poly.addListener('click', function(){
+                    var contentString = "<b>" + data[g]["name"] + "</b><br>" +
+                    "<i>" + data[g]["details"] + "</i><<br>" +
+                    data[g]["message"]
 
                     infoWindow.setContent(contentString);
                     infoWindow.open(map);
