@@ -176,7 +176,25 @@ function initMap() {
             data: '{"longitude": ' + map.getCenter().lng() + ',"latitude": ' + map.getCenter().lat() +',"max_distance": 400,"limit": 50}',
             success: function (data) {
                 for (var i in data){
-                    heatMapData.push({location: new google.maps.LatLng(data[i]["latitude"], data[i]["longitude"]), weight: 50})
+                    var weight = 0
+
+                    if (data[i]["average_annual_damage"] == 'L'){
+                        weight = weight + 10
+                    } else if (data[i]["average_annual_damage"] == 'M'){
+                        weight = weight + 20
+                    } else if (data[i]["average_annual_damage"] == 'H'){
+                        weight = weight + 30
+                    }
+
+                    if (data[i]["flood-frequency"] == 'L'){
+                        weight = weight + 10
+                    } else if (data[i]["flood-frequency"] == 'M'){
+                        weight = weight + 20
+                    } else if (data[i]["flood-frequency"] == 'H'){
+                        weight = weight + 30
+                    }
+
+                    heatMapData.push({location: new google.maps.LatLng(data[i]["latitude"], data[i]["longitude"]), weight: weight})
                 }
                 heatmap.setData(heatMapData);
             },
