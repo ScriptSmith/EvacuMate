@@ -1,15 +1,39 @@
 [
     {
-        "name": "",
-        "details": "",
-        "message": "Message for people in this area",
+        "name": "Ipswich",
+        "details": "Mild flooding",
+        "message": "There is mild flooding in ipswich. Call 132 500 in case of emergency",
         "polygons": [
             [
-                {"longitude": 110.390625, "latitude": -7.710992},
-                {"longitude": 153.984375, "latitude": -6.315299},
-                {"longitude": 153.984375, "latitude": -45.089036},
-                {"longitude": 108.984375, "latitude": -42.032974},
-                {"longitude": 110.390625, "latitude": -7.710992}
+                {"longitude": 152.725067,"latitude":-27.468069},
+                {"longitude": 152.834930,"latitude":-27.483908},
+                {"longitude": 152.880249,"latitude":-27.564287},
+                {"longitude": 152.880249,"latitude":-27.649472},
+                {"longitude": 152.852783,"latitude":-27.710279},
+                {"longitude": 152.758026,"latitude":-27.723652},
+                {"longitude": 152.696228,"latitude":-27.693256},
+                {"longitude": 152.682495,"latitude":-27.608105},
+                {"longitude": 152.681122,"latitude":-27.519233},
+                {"longitude": 152.696228,"latitude":-27.479035},
+                {"longitude": 152.725067,"latitude":-27.468069}
+            ]
+        ]
+    },
+    {
+        "name": "Gold Coast",
+        "details": "Heavy flooding",
+        "message": "Dangerous floods from Coomera to Coolangatta. Call 132 500 in case of emergency",
+        "polygons": [
+            [
+                {"longitude":153.257904,"latitude":-27.830575},
+                {"longitude":153.397980,"latitude":-27.778342},
+                {"longitude":153.472137,"latitude":-27.796566},
+                {"longitude":153.509216,"latitude":-27.915553},
+                {"longitude":153.577881,"latitude":-28.193085},
+                {"longitude":153.458405,"latitude":-28.206398},
+                {"longitude":153.289490,"latitude":-28.059862},
+                {"longitude":153.245544,"latitude":-27.882784},
+                {"longitude":153.257904,"latitude":-27.830575}
             ]
         ]
     }
