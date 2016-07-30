@@ -51,21 +51,23 @@
         "details": "Out of control bush fire",
         "message": "Residents are advised to evacuate their homes due to severe risks. Call 132 500 for more info",
         "polygons": [
-            {"longitude":151.825562,"latitude":-27.415662},
-            {"longitude":151.946411,"latitude":-27.391278},
-            {"longitude":152.122192,"latitude":-27.415662},
-            {"longitude":152.265015,"latitude":-27.440040},
-            {"longitude":152.325439,"latitude":-27.440040},
-            {"longitude":152.391357,"latitude":-27.513143},
-            {"longitude":152.363892,"latitude":-27.586198},
-            {"longitude":152.308960,"latitude":-27.678664},
-            {"longitude":152.182617,"latitude":-27.625140},
-            {"longitude":152.001343,"latitude":-27.644606},
-            {"longitude":151.907959,"latitude":-27.639740},
-            {"longitude":151.847534,"latitude":-27.605671},
-            {"longitude":151.748657,"latitude":-27.542371},
-            {"longitude":151.765137,"latitude":-27.449790},
-            {"longitude":151.825562,"latitude":-27.415662}
+            [
+                {"longitude":151.825562,"latitude":-27.415662},
+                {"longitude":151.946411,"latitude":-27.391278},
+                {"longitude":152.122192,"latitude":-27.415662},
+                {"longitude":152.265015,"latitude":-27.440040},
+                {"longitude":152.325439,"latitude":-27.440040},
+                {"longitude":152.391357,"latitude":-27.513143},
+                {"longitude":152.363892,"latitude":-27.586198},
+                {"longitude":152.308960,"latitude":-27.678664},
+                {"longitude":152.182617,"latitude":-27.625140},
+                {"longitude":152.001343,"latitude":-27.644606},
+                {"longitude":151.907959,"latitude":-27.639740},
+                {"longitude":151.847534,"latitude":-27.605671},
+                {"longitude":151.748657,"latitude":-27.542371},
+                {"longitude":151.765137,"latitude":-27.449790},
+                {"longitude":151.825562,"latitude":-27.415662}
+            ]
         ]
     }
 ]
