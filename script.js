@@ -115,9 +115,6 @@ function initMap() {
         new google.maps.LatLng(37.782, -122.441),
     ];
 
-    function getHeatMapData(){
-        return heatMapData;
-    }
 
     $.getJSON("./locations.json", function(data) {
         for (var g in data){
@@ -183,13 +180,12 @@ function initMap() {
             headers: {"x-iag-api-key": "iag-gov-hack-api"},
             data: '{"longitude": ' + map.getCenter().lng() + ',"latitude": ' + map.getCenter().lat() +',"max_distance": 100,"limit": 20}',
             success: function (data) {
-                console.log(data)
                 for (var i in data){
                     var point = data[i]
-                    var heatMarker = new google.maps.LatLng(parseInt(point["latitude"]), parseInt(point["longitude"]));
+                    console.log(point)
+                    var heatMarker = new google.maps.LatLng({lat: point["latitude"], lng: point["longitude"]});
                     heatMapData.push(heatMarker)
                 }
-                console.log(heatMapData)
             },
             error: function(){
                 console.log("Cannot get data");
