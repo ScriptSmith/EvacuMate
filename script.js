@@ -176,7 +176,7 @@ function initMap() {
             data: '{"longitude": ' + map.getCenter().lng() + ',"latitude": ' + map.getCenter().lat() +',"max_distance": 200,"limit": 50}',
             success: function (data) {
                 for (var i in data){
-                    heatMapData.push({location: new google.maps.LatLng(data[i]["latitude"], data[i]["longitude"]), weight: 50)
+                    heatMapData.push({location: new google.maps.LatLng(data[i]["latitude"], data[i]["longitude"]), weight: 50})
                 }
                 heatmap.setData(heatMapData);
             },
