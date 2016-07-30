@@ -44,7 +44,7 @@ app.get('/webhook/', function (req, res) {
 
 // Spin up the server
 app.listen(app.get('port'), function() {
-    console.log('running on port', app.get('port'))
+    console.log('running on port', app.get('port'));
 })
 
 app.post('/webhook/', function (req, res) {
@@ -54,7 +54,7 @@ app.post('/webhook/', function (req, res) {
         let sender = event.sender.id
         if (event.message && event.message.text) {
             let text = event.message.text;
-            console.log("~~~~~~~~~~ " + text)
+            console.log("~~~~~~~~~~ " + text);
 
             // Geocode
             (function () {
@@ -100,13 +100,13 @@ function sendTextMessage(sender, text) {
         }
     }, function(error, response, body) {
         if (error) {
-            console.log('Error sending messages: ', error)
+            console.log('Error sending messages: ', error);
         } else if (response.body.error) {
-            console.log('Error: ', response.body.error)
+            console.log('Error: ', response.body.error);
         }
     })
 }
 
 if (process.env.TESTING == 1){
-    console.log("gotcha")
+    console.log("gotcha");
 }
