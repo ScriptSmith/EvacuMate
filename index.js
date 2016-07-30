@@ -55,7 +55,7 @@ app.post('/webhook/', function (req, res) {
 
             // Geocode
             (function () {
-                geocoder.geocode(text + " Australia", function ( err, data ) {
+                geocoder.geocode(text + " Queensland", function ( err, data ) {
                     console.log("%%%%%%%%%%%%%%%%%%%")
                     console.log(data)
                     console.log("%%%%%%%%%%%%%%%%%%%")
