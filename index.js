@@ -47,10 +47,11 @@ app.post('/webhook/', function (req, res) {
     for (let i = 0; i < messaging_events.length; i++) {
         let event = req.body.entry[0].messaging[i]
         let sender = event.sender.id
+        console.log("~~~~~~~~~~~~~~~~~~~")
         console.log(event)
+        console.log("~~~~~~~~~~~~~~~~~~~")
         if (event.message && event.message.text) {
             let text = event.message.text;
-            console.log("~ Message: '" + text + "'");
 
             // Geocode
             (function () {
@@ -58,6 +59,9 @@ app.post('/webhook/', function (req, res) {
                     if (data["results"].length < 1){
                         sendTextMessage(sender,text + " isn't a location I understand")
                     } else {
+                        console.log("%%%%%%%%%%%%%%%%%%%")
+                        console.log(data)
+                        console.log("%%%%%%%%%%%%%%%%%%%")
                         var senderLocation = data["results"][0]["geometry"]["location"];
                         var newLocations = getLocations(senderLocation);
 
@@ -86,8 +90,6 @@ function getLocations(senderLocation) {
         var location = locations[i]
         for (var j in location["polygons"]){
             var polygon = location["polygons"][j];
-            console.log('poly')
-            console.log(polygon)
             if (geolib.isPointInside({"latitude": senderLocation["lat"], "longitude": senderLocation["lng"]}, polygon)){
                 returnedLocations.push(location);
             }
