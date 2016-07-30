@@ -104,16 +104,16 @@ var styles =
     }
 ]
 
+var heatMapData = [
+    new google.maps.LatLng(37.782, -122.447),
+    new google.maps.LatLng(37.782, -122.445),
+    new google.maps.LatLng(37.782, -122.443),
+    new google.maps.LatLng(37.782, -122.441),
+];
 
 function initMap() {
     var infoWindow;
 
-    var heatMapData = [
-        new google.maps.LatLng(37.782, -122.447),
-        new google.maps.LatLng(37.782, -122.445),
-        new google.maps.LatLng(37.782, -122.443),
-        new google.maps.LatLng(37.782, -122.441),
-    ];
 
 
     $.getJSON("./locations.json", function(data) {
@@ -182,7 +182,7 @@ function initMap() {
             success: function (data) {
                 for (var i in data){
                     var point = data[i]
-                    console.log(point)
+                    console.log({lat: point["latitude"], lng: point["longitude"]})
                     var heatMarker = new google.maps.LatLng({lat: point["latitude"], lng: point["longitude"]});
                     heatMapData.push(heatMarker)
                 }
