@@ -68,7 +68,7 @@ app.post('/webhook/', function (req, res) {
                         if (newLocations.length < 1){
                             sendTextMessage(sender, "No warnings for " + text)
                         } else {
-                            sendTextMessage(sender, "Message for: " + data["results"]["formatted_address"])
+                            sendTextMessage(sender, "Message for: " + data["results"][0]["formatted_address"])
                             sendTextMessage(sender, newLocations[0]["message"])
                         }
                     }
