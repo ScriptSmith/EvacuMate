@@ -1,3 +1,4 @@
+var heatMapData = [];
 var styles =
 [
     {
@@ -147,7 +148,6 @@ function initMap() {
         }
     })
 
-    var heatMapData = [];
 
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 9,
@@ -177,7 +177,7 @@ function initMap() {
                 for (var i in data){
                     var point = data[i]
                     console.log(point["latitude"] + " " + point["longitude"])
-                    heatMapData.push(new google.maps.LatLng(point["longitude"],point["latitude"]))
+                    heatMapData.push(new google.maps.LatLng(point["latitude"],point["longitude"]))
                 }
             },
             error: function(){
