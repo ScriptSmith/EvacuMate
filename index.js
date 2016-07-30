@@ -58,9 +58,9 @@ app.post('/webhook/', function (req, res) {
     for (let i = 0; i < messaging_events.length; i++) {
         let event = req.body.entry[0].messaging[i]
         let sender = event.sender.id
-        console.log("~~~~~~~~~~~~~~~~~~~")
-        console.log(event)
-        console.log("~~~~~~~~~~~~~~~~~~~")
+        // console.log("~~~~~~~~~~~~~~~~~~~")
+        // console.log(event)
+        // console.log("~~~~~~~~~~~~~~~~~~~")
 
         if (event.optin && event.optin.ref == "index" || event.message.text == "welcome"){
             sendTextMessage(sender, "G'day!")
@@ -74,9 +74,9 @@ app.post('/webhook/', function (req, res) {
             // Geocode
             (function () {
                 geocoder.geocode(text + " Queensland", function ( err, data ) {
-                    console.log("%%%%%%%%%%%%%%%%%%%")
-                    console.log(data)
-                    console.log("%%%%%%%%%%%%%%%%%%%")
+                    // console.log("%%%%%%%%%%%%%%%%%%%")
+                    // console.log(data)
+                    // console.log("%%%%%%%%%%%%%%%%%%%")
                     if (data["results"].length < 1){
                         sendTextMessage(sender, text + " isn't a location that I understand")
                     } else {
@@ -89,6 +89,7 @@ app.post('/webhook/', function (req, res) {
                             sendMapMessage(sender, newLocations[0]["message"])
 
                             checkCommunityInfrastructure(sender,senderLocation);
+                            checkWifiHotspots(sender,senderLocation);
                             checkSESBuildings(sender,senderLocation);
                         }
                     }
