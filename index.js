@@ -67,8 +67,10 @@ app.post('/webhook/', function (req, res) {
 
                         if (newLocations.length < 1){
                             sendTextMessage(sender, "No warnings for " + text)
+                            sendMapMessage(sender)
                         } else {
                             sendTextMessage(sender, newLocations[0]["message"])
+                            sendMapMessage(sender)
                         }
                     }
                 }, {"key" : process.env.GMAPS_API});
@@ -76,7 +78,6 @@ app.post('/webhook/', function (req, res) {
         }
 
         if (event.message && !event.message.text) {
-            sendMapMessage(sender)
         }
 
         if (event.optin && event.optin.ref == "index"){
