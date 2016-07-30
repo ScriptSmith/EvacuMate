@@ -1,5 +1,5 @@
 'use strict'
-
+// Webhooks
 const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
@@ -11,16 +11,7 @@ var geocoder = require('geocoder');
 //List of locations
 var locations = require('./locations.json');
 
-
-var options = {
-  provider: 'google',
-
-  // Optional depending on the providers
-  httpAdapter: 'https', // Default
-  apiKey: 'AIzaSyC5_74zprCJ8ZZdHJrNbTcGxl6nNdNRlsA', // for Mapquest, OpenCage, Google Premier
-  formatter: null         // 'gpx', 'string', ...
-};
-
+// Port for webhook
 app.set('port', (process.env.PORT || 5000))
 
 // Process application/x-www-form-urlencoded
@@ -47,6 +38,7 @@ app.listen(app.get('port'), function() {
     console.log('running on port', app.get('port'));
 })
 
+// Main function
 app.post('/webhook/', function (req, res) {
     let messaging_events = req.body.entry[0].messaging
     for (let i = 0; i < messaging_events.length; i++) {
@@ -54,14 +46,13 @@ app.post('/webhook/', function (req, res) {
         let sender = event.sender.id
         if (event.message && event.message.text) {
             let text = event.message.text;
-            console.log("~~~~~~~~~~ " + text);
+            console.log("~ Message: '" + text + "'");
 
             // Geocode
             (function () {
                 geocoder.geocode(text, function ( err, data ) {
-
                     if (data["results"].length < 1){
-                        sendTextMessage(sender,text + " didn't work")
+                        sendTextMessage(sender,text + " isn't a location I understand")
                     } else {
                         var senderLocation = data["results"][0]["geometry"]["location"];
                         var newLocations = getLocations(senderLocation);
