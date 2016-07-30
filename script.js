@@ -154,13 +154,13 @@ function initMap() {
         center: {lat: -27.4999514, lng: 153.0154763}
     });
 
+    map.setOptions({styles: styles});
+    
     heatmap = new google.maps.visualization.HeatmapLayer({
         data: heatMapData,
+        map: map
     });
 
-    heatmap.setMap(map);
-
-    map.setOptions({styles: styles});
 
     infoWindow = new google.maps.InfoWindow();
 
