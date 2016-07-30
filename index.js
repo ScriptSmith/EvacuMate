@@ -14,6 +14,9 @@ var geolib = require('geolib')
 //List of locations
 var locations = require('./locations.json');
 
+//Check warnings
+var FeedParser = require('feedparser')
+
 // Port for webhook
 app.set('port', (process.env.PORT || 5000))
 
@@ -53,26 +56,59 @@ app.post('/webhook/', function (req, res) {
         if (event.message && event.message.text) {
             let text = event.message.text;
 
-            // Geocode
-            (function () {
-                geocoder.geocode(text + " Queensland", function ( err, data ) {
-                    console.log("%%%%%%%%%%%%%%%%%%%")
-                    console.log(data)
-                    console.log("%%%%%%%%%%%%%%%%%%%")
-                    if (data["results"].length < 1){
-                        sendTextMessage(sender, text + " isn't a location I understand")
-                    } else {
-                        var senderLocation = data["results"][0]["geometry"]["location"];
-                        var newLocations = getLocations(senderLocation);
-
-                        if (newLocations.length < 1){
-                            sendTextMessage(sender, "No warnings for " + text)
+            if (text != "warnings"){
+                // Geocode
+                (function () {
+                    geocoder.geocode(text + " Queensland", function ( err, data ) {
+                        console.log("%%%%%%%%%%%%%%%%%%%")
+                        console.log(data)
+                        console.log("%%%%%%%%%%%%%%%%%%%")
+                        if (data["results"].length < 1){
+                            sendTextMessage(sender, text + " isn't a location I understand")
                         } else {
-                            sendMapMessage(sender, newLocations[0]["message"])
+                            var senderLocation = data["results"][0]["geometry"]["location"];
+                            var newLocations = getLocations(senderLocation);
+
+                            if (newLocations.length < 1){
+                                sendTextMessage(sender, "No warnings for " + text)
+                            } else {
+                                sendMapMessage(sender, newLocations[0]["message"])
+                            }
                         }
-                    }
-                }, {"key" : process.env.GMAPS_API});
-            })();
+                    }, {"key" : process.env.GMAPS_API});
+                })();
+            } else {
+                var req = request('http://www.bom.gov.au/fwo/IDZ00056.warnings_qld.xml')
+                  , feedparser = new FeedParser();
+
+                req.on('error', function (error) {
+                  // handle any request errors
+                });
+                req.on('response', function (res) {
+                  var stream = this;
+
+                  if (res.statusCode != 200) return this.emit('error', new Error('Bad status code'));
+
+                  stream.pipe(feedparser);
+                });
+
+
+                feedparser.on('error', function(error) {
+                  // always handle errors
+                });
+                feedparser.on('readable', function() {
+                  // This is where the action is!
+                  var stream = this
+                    , meta = this.meta // **NOTE** the "meta" is always available in the context of the feedparser instance
+                    , item;
+
+                  while (item = stream.read()) {
+                    sendTextMessage(sender,item["title"]);
+                  }
+                });
+
+            }
+
         }
 
         if (event.message && !event.message.text) {
