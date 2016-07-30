@@ -105,6 +105,11 @@ var styles =
 ]
 
 var heatMapData = [];
+var heatmap, map;
+
+function toggleHeatmap() {
+  heatmap.setMap(heatmap.getMap() ? null : map);
+}
 
 function initMap() {
     var infoWindow;
