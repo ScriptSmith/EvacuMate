@@ -206,26 +206,28 @@ var styles =
 function initMap() {
 
     $.getJSON("./locations.json", function(data) {
-        console.log(data[0]["polygons"][0])
+        console.log([0])
 
-        firstPolygon = data[0]["polygons"][0];
+        for (var h in data[0]["polygons"]){
+            polygon = data[0]["polygons"][h]
 
-        for (var i in firstPolygon){
-            firstPolygon[i]["lat"] = firstPolygon[i]["latitude"];
-            firstPolygon[i]["lng"] = firstPolygon[i]["longitude"];
-            delete firstPolygon[i]["latitude"]
-            delete firstPolygon[i]["longitude"]
+            for (var i in polygon){
+                polygon[i]["lat"] = polygon[i]["latitude"];
+                polygon[i]["lng"] = polygon[i]["longitude"];
+                delete polygon[i]["latitude"]
+                delete polygon[i]["longitude"]
+            }
+
+            var poly = new google.maps.Polygon({
+                paths: polygon,
+                strokeColor: '#FF0000',
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: '#FF0000',
+                fillOpacity: 0.35
+            });
         }
 
-
-        var poly = new google.maps.Polygon({
-            paths: firstPolygon,
-            strokeColor: '#FF0000',
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: '#FF0000',
-            fillOpacity: 0.35
-        });
 
         poly.setMap(map);
     })
