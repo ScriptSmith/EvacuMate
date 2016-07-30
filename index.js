@@ -56,12 +56,12 @@ app.post('/webhook/', function (req, res) {
             // Geocode
             (function () {
                 geocoder.geocode(text + " Australia", function ( err, data ) {
+                    console.log("%%%%%%%%%%%%%%%%%%%")
+                    console.log(data)
+                    console.log("%%%%%%%%%%%%%%%%%%%")
                     if (data["results"].length < 1){
                         sendTextMessage(sender, text + " isn't a location I understand")
                     } else {
-                        console.log("%%%%%%%%%%%%%%%%%%%")
-                        console.log(data)
-                        console.log("%%%%%%%%%%%%%%%%%%%")
                         var senderLocation = data["results"][0]["geometry"]["location"];
                         var newLocations = getLocations(senderLocation);
 
