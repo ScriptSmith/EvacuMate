@@ -176,6 +176,7 @@ function initMap() {
             success: function (data) {
                 for (var i in data){
                     var point = data[i]
+                    console.log(point["latitude"] + " " + point["longitude"])
                     heatMapData.push(new google.maps.LatLng(point["latitude"],point["longitude"]))
                 }
             },
