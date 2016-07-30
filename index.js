@@ -68,7 +68,8 @@ app.post('/webhook/', function (req, res) {
             })();
         }
         if (event.optin && event.optin.ref == "index"){
-            sendTextMessage(sender, "Welcome to Evacumate. Which location would you like to know about?")
+            sendTextMessage(sender, "Welcome to EvacuMate. During natural disasters, you can send me messages and I'll tell you about the status of a location.")
+            sendTextMessage(sender, "Which location would you like to know about?")
         }
     }
     res.sendStatus(200)
