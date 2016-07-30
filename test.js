@@ -1,31 +1,56 @@
-var FeedParser = require('feedparser')
-  , request = require('request');
-
-var req = request('http://www.bom.gov.au/fwo/IDZ00056.warnings_qld.xml')
-  , feedparser = new FeedParser();
-
-req.on('error', function (error) {
-  // handle any request errors
-});
-req.on('response', function (res) {
-  var stream = this;
-
-  if (res.statusCode != 200) return this.emit('error', new Error('Bad status code'));
-
-  stream.pipe(feedparser);
-});
+var parse = require('csv-parse');
+var https = require('https')
+var geolib = require('geolib')
 
 
-feedparser.on('error', function(error) {
-  // always handle errors
-});
-feedparser.on('readable', function() {
-  // This is where the action is!
-  var stream = this
-    , meta = this.meta // **NOTE** the "meta" is always available in the context of the feedparser instance
-    , item;
+var url = 'https://www.data.brisbane.qld.gov.au/data/dataset/d14761ac-9bd9-4712-aefd-4bace8ca7148/resource/31b0c6e9-2f13-4cc6-9b35-45a8d08c1b8f/download/community-halls-information-and-location.csv';
+var location = {
+    "lat": -27.5007447,
+    "lng": 153.020644
+}
 
-  while (item = stream.read()) {
-    console.log(item["title"]);
-  }
+https.get(url, function(res){
+    var body = '';
+
+    res.on('data', function(chunk){
+        body += chunk;
+    });
+
+    res.on('end', function(){
+        parse(body, {comment: '#'}, function(err, output){
+            output = output.slice(1, output.length + 1)
+
+            var maximum = {
+                name: "None",
+                lat: -27.509489,
+                lng: 153.03389,
+                distance: 100000
+            }
+
+            for (var i in output){
+                var hall = output[i]
+
+                var name = hall[0]
+                var lat = parseFloat(hall[1])
+                var lng = parseFloat(hall[2])
+
+                var distance = geolib.getDistance(
+                    {latitude: lat, longitude: lng},
+                    {latitude: location["lat"], longitude: location["lng"]}
+                )
+
+                if (distance < maximum["distance"]){
+                    maximum["name"] = name
+                    maximum["lat"] = lat
+                    maximum["lng"] = lng
+                    maximum["distance"] = distance
+                }
+
+            }
+
+            sendLinkMessage(sender, "Your nearest community centre is " + maximum["name"], "https://www.google.com/maps/?q=" + maximum["lat"] + "," + maximum['lng'])
+        });
+    });
+}).on('error', function(e){
+      console.log("Got an error: ", e);
 });

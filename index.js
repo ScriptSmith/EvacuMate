@@ -16,6 +16,11 @@ var locations = require('./locations.json');
 
 //Check warnings
 var FeedParser = require('feedparser')
+var http = require('http')
+
+//Check for infrastructure
+var parse = require('csv-parse');
+var https = require('https')
 
 // Port for webhook
 app.set('port', (process.env.PORT || 5000))
@@ -72,6 +77,8 @@ app.post('/webhook/', function (req, res) {
                             sendTextMessage(sender, "No warnings for " + text)
                         } else {
                             sendMapMessage(sender, newLocations[0]["message"])
+
+                            checkCommunityInfrastructure(sender,senderLocation)
                         }
                     }
                 }, {"key" : process.env.GMAPS_API});
@@ -167,7 +174,7 @@ function sendMapMessage(sender, text) {
                     {
                       "type":"web_url",
                       "url":"http://evacumate.xyz/map.html",
-                      "title":"Show Map"
+                      "title":"View More"
                     }
                 ]
             }
@@ -200,7 +207,7 @@ function sendLinkMessage(sender, text, link) {
                     {
                       "type":"web_url",
                       "url": link,
-                      "title":"Show Map"
+                      "title":"Open link"
                     }
                 ]
             }
@@ -237,7 +244,7 @@ function sendMainMessage(sender) {
                     },
                     {
                         "type":"postback",
-                        "title":"View weather warnings",
+                        "title":"Weather warnings",
                         "payload":"warnings"
                     }
                 ]
@@ -259,6 +266,56 @@ function sendMainMessage(sender) {
             console.log('Error: ', response.body.error);
         }
     })
+}
+
+function checkCommunityInfrastructure(sender, location){
+    var url = 'https://www.data.brisbane.qld.gov.au/data/dataset/d14761ac-9bd9-4712-aefd-4bace8ca7148/resource/31b0c6e9-2f13-4cc6-9b35-45a8d08c1b8f/download/community-halls-information-and-location.csv';
+
+    https.get(url, function(res){
+        var body = '';
+
+        res.on('data', function(chunk){
+            body += chunk;
+        });
+
+        res.on('end', function(){
+            parse(body, {comment: '#'}, function(err, output){
+                output = output.slice(1, output.length + 1)
+
+                var maximum = {
+                    name: "None",
+                    lat: -27.509489,
+                    lng: 153.03389,
+                    distance: 100000
+                }
+
+                for (var i in output){
+                    var hall = output[i]
+
+                    var name = hall[0]
+                    var lat = parseFloat(hall[1])
+                    var lng = parseFloat(hall[2])
+
+                    var distance = geolib.getDistance(
+                        {latitude: lat, longitude: lng},
+                        {latitude: location["lat"], longitude: location["lng"]}
+                    )
+
+                    if (distance < maximum["distance"]){
+                        maximum["name"] = name
+                        maximum["lat"] = lat
+                        maximum["lng"] = lng
+                        maximum["distance"] = distance
+                    }
+
+                }
+
+                sendLinkMessage(sender, "Your nearest community centre is " + maximum["name"], "https://www.google.com/maps/?q=" + maximum["lat"] + "," + maximum['lng'])
+            });
+        });
+    }).on('error', function(e){
+          console.log("Got an error: ", e);
+    });
 }
 
 
