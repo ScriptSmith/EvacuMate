@@ -2,7 +2,7 @@
     {
         "name": "",
         "details": "",
-        "message": "",
+        "message": "Message for people in this area",
         "boxes": [
             {
                 "minLng": 106.5234375,
