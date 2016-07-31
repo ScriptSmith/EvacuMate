@@ -88,9 +88,7 @@ app.post('/webhook/', function (req, res) {
                         } else {
                             sendMapMessage(sender, newLocations[0]["message"])
 
-                            checkCommunityInfrastructure(sender,senderLocation);
-                            checkWifiHotspots(sender,senderLocation);
-                            checkSESBuildings(sender,senderLocation);
+                            sendExpandMessage(sender, senderLocation);
                         }
                     }
                 }, {"key" : process.env.GMAPS_API});
@@ -131,6 +129,12 @@ app.post('/webhook/', function (req, res) {
                 sendLinkMessage(sender,item["title"],item["link"]);
               }
             });
+        } else if (event.postback && JSON.parse(event.postback.payload)["location"]){
+            var location = JSON.parse(event.postback.payload)["location"];
+
+            checkCommunityInfrastructure(sender,location);
+            checkWifiHotspots(sender,location);
+            checkSESBuildings(sender,location);
         }
     }
     res.sendStatus(200)
@@ -275,6 +279,40 @@ function sendMainMessage(sender) {
         }
     })
 }
+function sendExpandMessage(sender, location) {
+    let messageData = {
+        "attachment":{
+            "type":"template",
+            "payload":{
+                "template_type":"button",
+                "text": "Options:",
+                "buttons":[
+                    {
+                        "type":"postback",
+                        "title":"Want to see more?",
+                        "payload":"{location:" + location + "}"
+                    }
+                ]
+            }
+        }
+    }
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: {access_token:token},
+        method: 'POST',
+        json: {
+            recipient: {id:sender},
+            message: messageData,
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending messages: ', error);
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error);
+        }
+    })
+}
+
 
 function checkCommunityInfrastructure(sender, location){
     var url = 'https://www.data.brisbane.qld.gov.au/data/dataset/d14761ac-9bd9-4712-aefd-4bace8ca7148/resource/31b0c6e9-2f13-4cc6-9b35-45a8d08c1b8f/download/community-halls-information-and-location.csv';
