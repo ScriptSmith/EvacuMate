@@ -73,32 +73,34 @@ app.post('/webhook/', function (req, res) {
 
             if (text == "Hi EvacuMate!"){
                 sendTextMessage(sender, "Hi Adam")
+            } else {
+                // Geocode
+                (function () {
+                    geocoder.geocode(text + " Queensland", function ( err, data ) {
+                        // console.log("%%%%%%%%%%%%%%%%%%%")
+                        // console.log(data)
+                        // console.log("%%%%%%%%%%%%%%%%%%%")
+                        if (data["results"].length < 1){
+                            sendTextMessage(sender, text + " isn't a location that I understand")
+                        } else {
+                            var senderLocation = data["results"][0]["geometry"]["location"];
+                            var newLocations = getLocations(senderLocation);
+
+                            if (newLocations.length < 1){
+                                sendTextMessage(sender, "There are no warnings in " + text)
+                            } else {
+                                sendMapMessage(sender, newLocations[0]["message"])
+
+                                setTimeout(function(){checkCommunityInfrastructure(sender,senderLocation)}, 3000);
+                                setTimeout(function(){checkWifiHotspots(sender,senderLocation)}, 6000);
+                                setTimeout(function(){checkSESBuildings(sender,senderLocation)}, 9000);
+                            }
+                        }
+                    }, {"key" : process.env.GMAPS_API});
+                })();
+
             }
 
-            // Geocode
-            (function () {
-                geocoder.geocode(text + " Queensland", function ( err, data ) {
-                    // console.log("%%%%%%%%%%%%%%%%%%%")
-                    // console.log(data)
-                    // console.log("%%%%%%%%%%%%%%%%%%%")
-                    if (data["results"].length < 1){
-                        sendTextMessage(sender, text + " isn't a location that I understand")
-                    } else {
-                        var senderLocation = data["results"][0]["geometry"]["location"];
-                        var newLocations = getLocations(senderLocation);
-
-                        if (newLocations.length < 1){
-                            sendTextMessage(sender, "There are no warnings in " + text)
-                        } else {
-                            sendMapMessage(sender, newLocations[0]["message"])
-
-                            setTimeout(function(){checkCommunityInfrastructure(sender,senderLocation)}, 3000);
-                            setTimeout(function(){checkWifiHotspots(sender,senderLocation)}, 6000);
-                            setTimeout(function(){checkSESBuildings(sender,senderLocation)}, 9000);
-                        }
-                    }
-                }, {"key" : process.env.GMAPS_API});
-            })();
         }
 
         if (event.message && !event.message.text) {
