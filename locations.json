@@ -2,7 +2,7 @@
     {
         "name": "Ipswich",
         "details": "Mild flooding",
-        "message": "There is mild flooding in ipswich. Call 132 500 in case of emergency",
+        "message": "There is mild flooding in ipswich. The elerly care centre has been evacuated. Call 132 500 in case of emergency",
         "polygons": [
             [
                 {"longitude": 152.725067,"latitude":-27.468069},
@@ -22,7 +22,7 @@
     {
         "name": "Gold Coast",
         "details": "Heavy flooding",
-        "message": "Dangerous floods from Coomera to Coolangatta. Call 132 500 in case of emergency",
+        "message": "Dangerous floods from Coomera to Coolangatta. Drivers are advised to not drive on submurged roads. Call 132 500 in case of emergency",
         "polygons": [
             [
                 {"longitude":153.257904,"latitude":-27.830575},
@@ -49,7 +49,7 @@
     {
         "name": "Toowoomba and Gatton",
         "details": "Out of control bush fire",
-        "message": "Residents are advised to evacuate their homes due to severe risks. Call 132 500 for more info",
+        "message": "Residents are advised to evacuate their homes due to severe risks, and not to attempt to defend their homes. Call 132 500 for more info",
         "polygons": [
             [
                 {"longitude":151.825562,"latitude":-27.415662},
