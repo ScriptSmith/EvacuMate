@@ -64,8 +64,8 @@ app.post('/webhook/', function (req, res) {
 
         if (event.optin && event.optin.ref == "index"){
             sendTextMessage(sender, "G'day!")
-            setTimeout(function(){sendTextMessage(sender, "Welcome to EvacuMate. During natural disasters, you can send me messages and I'll tell you about the status of a location.")},2000);
-            setTimeout(function(){sendTextMessage(sender, "Which location would you like to know about?")},4000);
+            setTimeout(function(){sendTextMessage(sender, "Welcome to EvacuMate. During natural disasters, you can send me messages and I'll tell you about the status of a location.")},5000);
+            setTimeout(function(){sendTextMessage(sender, "Which location would you like to know about?")},8000);
         }
 
         if (event.message && event.message.text) {
@@ -88,9 +88,9 @@ app.post('/webhook/', function (req, res) {
                         } else {
                             sendMapMessage(sender, newLocations[0]["message"])
 
-                            setTimeout(function(){checkCommunityInfrastructure(sender,senderLocation)}, 2000);
-                            setTimeout(function(){checkWifiHotspots(sender,senderLocation)}, 4000);
-                            setTimeout(function(){checkSESBuildings(sender,senderLocation)}, 6000);
+                            setTimeout(function(){checkCommunityInfrastructure(sender,senderLocation)}, 3000);
+                            setTimeout(function(){checkWifiHotspots(sender,senderLocation)}, 6000);
+                            setTimeout(function(){checkSESBuildings(sender,senderLocation)}, 9000);
                         }
                     }
                 }, {"key" : process.env.GMAPS_API});
