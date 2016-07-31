@@ -129,7 +129,7 @@ app.post('/webhook/', function (req, res) {
                 sendLinkMessage(sender,item["title"],item["link"]);
               }
             });
-        } else if (event.postback && JSON.parse(event.postback.payload)["location"]){
+        } else if (event.postback && event.postback.payload.slice(0,9) == "{location"){
             var location = JSON.parse(event.postback.payload)["location"];
 
             checkCommunityInfrastructure(sender,location);
