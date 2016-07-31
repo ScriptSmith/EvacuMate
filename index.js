@@ -64,8 +64,8 @@ app.post('/webhook/', function (req, res) {
 
         if (event.optin && event.optin.ref == "index"){
             sendTextMessage(sender, "G'day!")
-            sendTextMessage(sender, "Welcome to EvacuMate. During natural disasters, you can send me messages and I'll tell you about the status of a location.")
-            sendTextMessage(sender, "Which location would you like to know about?")
+            setInterval(function(){sendTextMessage(sender, "Welcome to EvacuMate. During natural disasters, you can send me messages and I'll tell you about the status of a location.")},2000);
+            setInterval(function(){sendTextMessage(sender, "Which location would you like to know about?")},4000);
         }
 
         if (event.message && event.message.text) {
@@ -88,7 +88,9 @@ app.post('/webhook/', function (req, res) {
                         } else {
                             sendMapMessage(sender, newLocations[0]["message"])
 
-                            sendExpandMessage(sender, senderLocation);
+                            setInterval(function(){checkCommunityInfrastructure(sender,senderLocation)}, 2000);
+                            setInterval(function(){checkWifiHotspots(sender,senderLocation)}, 4000);
+                            setInterval(function(){checkSESBuildings(sender,senderLocation)}, 6000);
                         }
                     }
                 }, {"key" : process.env.GMAPS_API});
@@ -129,12 +131,6 @@ app.post('/webhook/', function (req, res) {
                 sendLinkMessage(sender,item["title"],item["link"]);
               }
             });
-        } else if (event.postback && event.postback.payload.slice(0,9) == "{location"){
-            var location = JSON.parse(event.postback.payload)["location"];
-
-            checkCommunityInfrastructure(sender,location);
-            checkWifiHotspots(sender,location);
-            checkSESBuildings(sender,location);
         }
     }
     res.sendStatus(200)
@@ -186,7 +182,7 @@ function sendMapMessage(sender, text) {
                     {
                       "type":"web_url",
                       "url":"http://evacumate.xyz/map.html",
-                      "title":"View map"
+                      "title":"View More"
                     }
                 ]
             }
@@ -279,40 +275,6 @@ function sendMainMessage(sender) {
         }
     })
 }
-function sendExpandMessage(sender, location) {
-    let messageData = {
-        "attachment":{
-            "type":"template",
-            "payload":{
-                "template_type":"button",
-                "text": "Want to see more?",
-                "buttons":[
-                    {
-                        "type":"postback",
-                        "title":"Yes",
-                        "payload":"{location:" + location + "}"
-                    }
-                ]
-            }
-        }
-    }
-    request({
-        url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: {access_token:token},
-        method: 'POST',
-        json: {
-            recipient: {id:sender},
-            message: messageData,
-        }
-    }, function(error, response, body) {
-        if (error) {
-            console.log('Error sending messages: ', error);
-        } else if (response.body.error) {
-            console.log('Error: ', response.body.error);
-        }
-    })
-}
-
 
 function checkCommunityInfrastructure(sender, location){
     var url = 'https://www.data.brisbane.qld.gov.au/data/dataset/d14761ac-9bd9-4712-aefd-4bace8ca7148/resource/31b0c6e9-2f13-4cc6-9b35-45a8d08c1b8f/download/community-halls-information-and-location.csv';
