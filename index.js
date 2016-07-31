@@ -186,7 +186,7 @@ function sendMapMessage(sender, text) {
                     {
                       "type":"web_url",
                       "url":"http://evacumate.xyz/map.html",
-                      "title":"View More"
+                      "title":"View map"
                     }
                 ]
             }
@@ -285,11 +285,11 @@ function sendExpandMessage(sender, location) {
             "type":"template",
             "payload":{
                 "template_type":"button",
-                "text": "Options:",
+                "text": "Want to see more?",
                 "buttons":[
                     {
                         "type":"postback",
-                        "title":"Want to see more?",
+                        "title":"Yes",
                         "payload":"{location:" + location + "}"
                     }
                 ]
