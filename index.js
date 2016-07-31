@@ -71,6 +71,10 @@ app.post('/webhook/', function (req, res) {
         if (event.message && event.message.text) {
             let text = event.message.text;
 
+            if (text == "Hi EvacuMate!"){
+                sendTextMessage(sender, "Hi Adam")
+            }
+
             // Geocode
             (function () {
                 geocoder.geocode(text + " Queensland", function ( err, data ) {
@@ -414,11 +418,4 @@ function checkSESBuildings(sender, location){
             sendLinkMessage(sender, "Your nearest State Emergency Service building is in " + maximum["name"], "https://www.google.com/maps/?q=" + maximum["lat"] + "," + maximum['lng'])
         });
     })
-}
-
-
-
-
-if (process.env.TESTING == 1){
-    console.log("gotcha");
 }
